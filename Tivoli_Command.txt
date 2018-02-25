@@ -1,0 +1,113 @@
+tws_user -password pass1234
+
+1 : /IVDS10/Tivoli/TV_INST/TWA/TWS/bin/conman status  --- to check the  status of tivoli running or down
+
+
+
+need to login through root  :   sudo su - 
+2 : /IVDS10/Tivoli/TV_INST/TWA/eWAS/bin/startServer.sh twaserver  --to bring WAS up 
+/IVDS20/TIVOLI/TWA/eWAS/bin/startServer.sh twaserver  --to bring WAS up 
+
+/IVDS10/Tivoli/TV_INST/TWA/eWAS/bin/stopServer.sh twaserver  --to shut down WAS      
+/IVDS20/TIVOLI/TWA/eWAS/bin/stopServer.sh twaserver  --to shut down WAS   
+
+
+3: /IVDS10/Tivoli/TV_INST/TWA/TWS/tws_env.sh  --- env file exists here  need to execute 
+   /IVDS20/TIVOLI/TWA/TWS/tws_env.sh  --- env file exists here  need to execute
+
+Stop and start procedures : 
+============================= 
+
+To stop Tivoli Workload Scheduler and WebSphere®, perform these steps:
+• Stop the WebSphere application server:
+ cd /IVDS10/Tivoli/TV_INST/TWA/TWS
+cd /IVDS20/TIVOLI/TWA/TWS/
+ . ./tws_env.sh
+
+cd /IVDS10/Tivoli/TV_INST/TWA/TWS/bin/
+cd /IVDS20/TIVOLI/TWA/TWS/bin/
+conman "stopappserver; wait"
+
+• Stop the engine and all of the processes that support the engine:
+  cd /IVDS10/Tivoli/TV_INST/TWA/TWS
+  . ./tws_env.sh
+cd /IVDS10/Tivoli/TV_INST/TWA/TWS/bin/
+cd /IVDS20/TIVOLI/TWA/TWS/bin/
+  
+conman "stop;wait"
+conman "shut;wait"
+
+
+•Start WebSphere:
+=========================
+
+cd /IVDS10/Tivoli/TV_INST/TWA/TWS/bin
+cd /IVDS20/TIVOLI/TWA/TWS/bin/
+
+conman "startappserver;wait"
+•Start TWS:
+cd /IVDS10/Tivoli/TV_INST/TWA/TWS/bin
+cd cd /IVDS20/TIVOLI/TWA/TWS/bin/
+./StartUp
+conman "start"
+
+4: /IVDS10/Tivoli/TV_INST/TWA/TWS]$ ./ResetPlan -scratch
+
+
+5: /IVDS10/Tivoli/TV_INST/TWA/TWS]$ ./JnextPlan -for 0000
+
+
+
+==========================================================================================
+
+
+conman
+lc = @;25
+
+
+/IVDS10/Tivoli/TV_INST/TWA/eWAS/profiles/twaprofile/bin
+
+
+
+
+stop was server TIVOLI
+
+/IVDS10/Tivoli/TV_INST/TWA/wastools
+./stopWas.sh
+
+./startWas.sh
+
+_
+tws_inst_pull_info_v3_6.sh -twsuser tws_user -twsver 8.5.1 
+[-date <yyyymmdd>] [-outdir <path>] [-nodbdefs][-nowas] [-db2support] [-debug] [-u]
+
+
+tws_inst_pull_info_v3_6.sh -twsuser tws_user -twsver 8.5.1 -outdir /IVDS10/Tivoli
+
+
+
+conman startappserver; wait"
+
+==========================================================================================
+Procedure to Change the Required Ports
+TWS_HOME/wastools
+
+./showHostProperties.sh> My_Ports.txt
+Save only the Port to be changed Ports in My_Ports.txt
+./changeHostProperties.sh My_Ports.txt
+./stopWas.sh -direct -user <username> -password <password>
+./startWas.sh -direct -user <username> -password <password>
+
+==================================================================
+
+ dumpsec > stc.out
+
+====================================================================
+
+to list symphony files ./conman listsym
+setsym <Log_File_NUMBER>
+
+showschedules (ss)
+
+====================================================================
+to find installed Database in Uinx Server ps -eaf | grep pmon

@@ -1,0 +1,33 @@
+
+
+
+nvl collese functions 
+
+how to display and delete duplictes 
+
+how many waves are ther 
+
+analytical functions 
+
+d/w dense rank and rank 
+
+indexs and materealized view? 
+
+he asked some senarios? 
+
+exctly did not rember   
+
+transformer functions with syntaxes? 
+
+how to archive data in datastage? 
+
+diff b/w lookp and join in depthly 
+
+partitions technqus?   
+
+
+MMFA_FACT_OUTROAM_USG_REV_DAILY
+S_Fact_Home_Usg_Rev_Daily
+MMFA_FACT_INROAM_USG_REV_DAILY_50
+MMFA_FACT_RECHARGES_PER_MSISDN_DAILY
+MMFA_FACT_USAGE_CIRCLE_DAILY_50

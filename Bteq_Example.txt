@@ -1,0 +1,25 @@
+rm TD_TAB_31.txt
+
+
+bteq << EOF >> TD_LOG.log
+.logon HEDW/up_mics,up_mics;
+.Set Echoreq off
+.Set Titledashes off
+.Set Separator '|'
+.Set Null '?'
+.Set width 700
+.export REPORT file= TD_TAB_31.txt
+   SELECT count(*) CNT from DP_BEDW.FACT_CALL_DRCDR_T12JN_20
+   where call_start_dt between '2014-08-01' and '2014-08-04'
+
+
+.logoff;
+.quit;
+EOF
+
+chomd 777 TD_TAB_31.txt
+
+select
+count(*) from DP_BEDW.UNIQUE_USERS_DATA_DAILY 
+where CALL_START_DT between '2014-07-01' and '2014-07-31'
+ and  CIRCLE_CODE in(10,20,30,40,80);

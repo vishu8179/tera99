@@ -1,0 +1,18 @@
+DBDetails(PasswordFile, NzDbId, 'USR')
+DBDetails(PasswordFile, NzDbId, 'PWD')
+DBDetails(PasswordFile, NzDbId, 'DBN')
+
+
+select * from ds_parameter where job_name='S_NZ_PUSH_Postpaid_Inroamer';
+
+delete from ds_parameter where parameter_name in ('NzServer','NzDbName','NzPassword','NzUser') and  job_name in 
+('S_NZ_PUSH_Postpaid_Home1','S_NZ_PUSH_Postpaid_Inroamer');
+
+
+SQL> delete from author
+2 where
+3 author_key in ('A101','A103','A120');
+
+2 rows deleted.
+
+SQL> select author_key from author;

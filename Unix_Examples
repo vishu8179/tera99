@@ -1,0 +1,143 @@
+BaseName:
+=======================
+The basename utility is used to
+
+Remove any prefix ending in /.
+Remove the suffix from a string.
+
+Examples:
+
+1. basename /usr/bin/perlscript
+This will remove the prefix, /usr/bin/, and prints only the string 'perlscript'
+
+2. basename perlscript script
+This will remove the suffix 'script' from 'perlscript' and prints only 'perl'
+
+3. basename /usr/bin/perlscript script
+This will remove both the prefix and suffix and prints only 'perl'
+
+
+Find:
+================
+To find files with name:
+
+find . -name 'filename'
+
+To find directories:
+
+find . -type d
+
+To find based on size
+
+find . -size 0
+
+Find the files which are modified within 1 day.
+
+find . -mtime -1
+
+Print the files which are accessed within 1 hour
+
+find . -amin -60
+
+Print the files which are accessed within 1 day
+find . -atime 1
+
+
+Kill
+=====================
+
+The kill commond to foribly killing a process
+
+-9 :SIGKILL
+kill -9 id 
+
+WC:
+==================
+find the no.of words,lines and characters in a filename
+
+-l : Prints the number of lines in a file.
+-w : prints the number of words in a file.
+-c : Displays the count of bytes in a file.
+-m : prints the count of characters from a file.
+
+wc -l filename: prints no of lines in a file
+
+
+Sed:Stream editor used for modifying the files
+=======================================
+
+Replacing or substituting string
+
+sed 's/Murali/Bharath/' filename
+
+it replace the first occurance in a given string
+
+Replacing the nth occurrence of a pattern in a line
+
+sed 's/Murali/Bharath/2' filename
+
+Replacing all the occurrence of the pattern in a line.
+
+sed 's/Murali/Bharath/g' filename
+
+Replacing from nth occurrence to all occurrences in a line.
+sed 's/Murali/Bharath/3g' filename
+
+From the above commond replace from 3rd occurance to nth occurance
+
+
+to print first and last line in a file
+sed -n '1p;$p' Final_Pars.txt
+
+Duplicating the replaced line with /p flag
+
+sed 's/unix/linux/p' file.txt
+
+Printing only the replaced lines
+
+Use the -n option along with the /p print flag to display only the replaced lines. 
+sed -n 's/unix/linux/p' file.txt
+
+To run multiple sed commaond 
+sed -e 's/unix/linux/' -e 's/os/system/' file.txt
+
+Replacing string on a range of lines.
+sed '1,3 s/unix/linux/' file.txt
+
+Deleting lines
+
+sed '2 d' file.txt
+sed '5,$ d' file.txt
+
+
+Duplicating lines
+sed 'p' filename
+
+Add a line after a match.
+sed '/unix/ a "Add a new line"' file.txt
+
+Add a line before a match
+sed '/unix/ i "Add a new line"' file.txt
+
+Change a line
+sed '/unix/ c "Change line"' file.txt
+
+Grep: Global search for regular expression and print
+===============================================
+
+Case insensitive search
+grep -i "UNix" file.txt
+
+Checking for the whole words in a file.
+grep -w "world" file.txt
+
+Displaying the non-empty lines
+grep -v "^$" file.txt
+
+Displaying the count of number of matches.
+grep -c "sting" file.txt
+
+to find word in a file
+grep "Murali" filename
+
+

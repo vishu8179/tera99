@@ -1,0 +1,845 @@
+/*======================================================================================================
+=	Job Name       : Implementation of SCD Type 2 and Type 1 in Netezza						=
+=	Version        : 1.0											=
+=	Author         : Kunjan Kumar										=
+=	Creation Date  : 21-Aug-2014										=
+=	Description    : It will fist capture the changes and do the Insert ,Close and Update the records accordingly	                =
+ ======================================================================================================= */
+
+
+/*======================================================================
+	Step 1: Capturing new and Changes Records For Type-2 and Type-1
+========================================================================*/
+
+TRUNCATE TABLE DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_MINUS_#CircleCode#;
+insert into DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_MINUS_#CircleCode#
+(
+ SUBS_ID 
+,BASE_CIRCLE 
+,UNBR_DT
+,CAF_IND
+,CAF_DT
+,FR_DT
+,FRC_DT
+,LAST_RES_DT
+,ACTVN_DT
+,STATUS
+,STATUS_CHG_REASON 
+,AGE 
+,GENDER
+,MNP_IND 
+--,PORT_IN_OUT_DT
+,PORT_OUT_DT
+,PORT_IN_DT
+,IN_OPRTR
+,OUT_OPRTR
+,PRVSN_3G
+,PRVSN_DT
+,IND_3G
+,PRE_POST_IND 
+,SBSCRBR_TYPE
+,AREA_ID 
+,ENTRPRS_TYPE
+,ENTRPRS_NAME
+,OWNER_TYPE
+,BLLNG_CYCLE 
+,RISK_CATEG 
+,BLLNG_ADDR
+,IMSI
+,MSISDN
+,PARTY_ID 
+,ACCOUNT_ID 
+,RPT_CHURN_DT
+,LAST_RPT_CHURN_DT
+,ACTVN_EVENT 
+,STATUS_EFF_DT
+,EV_DATE
+,STATUS_REASON_CODE_DESCRIPTION
+,SEGMENT
+,ZERO_USERS_FLG 
+,RETAILER_ID
+,TV_DATE
+,AGE_ON_NETWORK 
+,IMEI_PRIMARY
+,IMEI_SECONDARY
+,SITE_ID
+,CELL_SITE_ID
+,DATE_OF_BIRTH
+,AGE_GROUP
+,TAC_PRIMARY_HANDSET
+,TAC_LATEST_HANDSET
+,ADDRESS
+,EMAIL
+,DND_FLAG
+,CS_SEGMENT_DESC
+,TARIFF_PLAN_ID_CODE
+,STATUS_DATE
+,ACQUISITION_CHANNEL
+)
+select 
+ SUBS_ID 
+,BASE_CIRCLE 
+,UNBR_DT
+,CAF_IND
+,CAF_DT
+,FR_DT
+,FRC_DT
+,LAST_RES_DT
+,ACTVN_DT
+,STATUS
+,STATUS_CHG_REASON 
+,AGE 
+,GENDER
+,MNP_IND 
+--,PORT_IN_OUT_DT
+,PORT_OUT_DT
+,PORT_IN_DT
+,IN_OPRTR
+,OUT_OPRTR
+,PRVSN_3G
+,PRVSN_DT
+,IND_3G
+,PRE_POST_IND 
+,SBSCRBR_TYPE
+,AREA_ID 
+,ENTRPRS_TYPE
+,ENTRPRS_NAME
+,OWNER_TYPE
+,BLLNG_CYCLE 
+,RISK_CATEG 
+,BLLNG_ADDR
+,IMSI
+,MSISDN
+,PARTY_ID 
+,ACCOUNT_ID 
+,RPT_CHURN_DT
+,LAST_RPT_CHURN_DT
+,ACTVN_EVENT 
+,STATUS_EFF_DT
+,EV_DATE
+,STATUS_REASON_CODE_DESCRIPTION
+,SEGMENT
+,ZERO_USERS_FLG 
+,RETAILER_ID
+,TV_DATE
+,AGE_ON_NETWORK 
+,IMEI_PRIMARY
+,IMEI_SECONDARY
+,SITE_ID
+,CELL_SITE_ID
+,DATE_OF_BIRTH
+,AGE_GROUP
+,TAC_PRIMARY_HANDSET
+,TAC_LATEST_HANDSET
+,ADDRESS
+,EMAIL
+,DND_FLAG
+,CS_SEGMENT_DESC
+,TARIFF_PLAN_ID_CODE
+,STATUS_DATE
+,ACQUISITION_CHANNEL
+from DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_SRC_DLY_#CircleCode#
+MINUS
+select 
+ SUBS_ID 
+,BASE_CIRCLE 
+,UNBR_DT
+,CAF_IND
+,CAF_DT
+,FR_DT
+,FRC_DT
+,LAST_RES_DT
+,ACTVN_DT
+,STATUS
+,STATUS_CHG_REASON 
+,AGE 
+,GENDER
+,MNP_IND 
+--,PORT_IN_OUT_DT
+,PORT_OUT_DT
+,PORT_IN_DT
+,IN_OPRTR
+,OUT_OPRTR
+,PRVSN_3G
+,PRVSN_DT
+,IND_3G
+,PRE_POST_IND 
+,SBSCRBR_TYPE
+,AREA_ID 
+,ENTRPRS_TYPE
+,ENTRPRS_NAME
+,OWNER_TYPE
+,BLLNG_CYCLE 
+,RISK_CATEG 
+,BLLNG_ADDR
+,IMSI
+,MSISDN
+,PARTY_ID 
+,ACCOUNT_ID 
+,RPT_CHURN_DT
+,LAST_RPT_CHURN_DT
+,ACTVN_EVENT 
+,STATUS_EFF_DT
+,EV_DATE
+,STATUS_REASON_CODE_DESCRIPTION
+,SEGMENT
+,ZERO_USERS_FLG 
+,RETAILER_ID
+,TV_DATE
+,AGE_ON_NETWORK 
+,IMEI_PRIMARY
+,IMEI_SECONDARY
+,SITE_ID
+,CELL_SITE_ID
+,DATE_OF_BIRTH
+,AGE_GROUP
+,TAC_PRIMARY_HANDSET
+,TAC_LATEST_HANDSET
+,ADDRESS
+,EMAIL
+,DND_FLAG
+,CS_SEGMENT_DESC
+,TARIFF_PLAN_ID_CODE
+,STATUS_DATE
+,ACQUISITION_CHANNEL
+from DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#
+WHERE REC_CLOSE_DT='2899-09-09';
+
+/*===================================================================
+	Step 2: Insertion of matching records into the Update Table
+====================================================================*/
+
+TRUNCATE TABLE DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_UPD_#CircleCode#;
+
+insert into DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_UPD_#CircleCode#
+(
+ SKEY
+,SUBS_ID 
+,BASE_CIRCLE 
+,UNBR_DT
+,CAF_IND
+,CAF_DT
+,FR_DT
+,FRC_DT
+,LAST_RES_DT
+,ACTVN_DT
+,STATUS
+,STATUS_CHG_REASON 
+,AGE 
+,GENDER
+,MNP_IND 
+--,PORT_IN_OUT_DT
+,PORT_OUT_DT
+,PORT_IN_DT
+,IN_OPRTR
+,OUT_OPRTR
+,PRVSN_3G
+,PRVSN_DT
+,IND_3G
+,PRE_POST_IND 
+,SBSCRBR_TYPE
+,AREA_ID 
+,ENTRPRS_TYPE
+,ENTRPRS_NAME
+,OWNER_TYPE
+,BLLNG_CYCLE 
+,RISK_CATEG 
+,BLLNG_ADDR
+,IMSI
+,MSISDN
+,PARTY_ID 
+,ACCOUNT_ID 
+,RPT_CHURN_DT
+,LAST_RPT_CHURN_DT
+,ACTVN_EVENT 
+,STATUS_EFF_DT
+,EV_DATE
+,STATUS_REASON_CODE_DESCRIPTION
+,SEGMENT
+,ZERO_USERS_FLG 
+,RETAILER_ID
+,TV_DATE
+,AGE_ON_NETWORK 
+,IMEI_PRIMARY
+,IMEI_SECONDARY
+,SITE_ID
+,CELL_SITE_ID
+,DATE_OF_BIRTH
+,AGE_GROUP
+,TAC_PRIMARY_HANDSET
+,TAC_LATEST_HANDSET
+,ADDRESS
+,EMAIL
+,DND_FLAG
+,CS_SEGMENT_DESC
+,TARIFF_PLAN_ID_CODE
+,STATUS_DATE
+,ACQUISITION_CHANNEL
+)
+select 
+ TGT.SKEY
+,MUN.SUBS_ID 
+,MUN.BASE_CIRCLE 
+,MUN.UNBR_DT
+,MUN.CAF_IND
+,MUN.CAF_DT
+,MUN.FR_DT
+,MUN.FRC_DT
+,MUN.LAST_RES_DT
+,MUN.ACTVN_DT
+,MUN.STATUS
+,MUN.STATUS_CHG_REASON 
+,MUN.AGE 
+,MUN.GENDER
+,MUN.MNP_IND 
+--,MUN.PORT_IN_OUT_DT
+,MUN.PORT_OUT_DT
+,MUN.PORT_IN_DT
+,MUN.IN_OPRTR
+,MUN.OUT_OPRTR
+,MUN.PRVSN_3G
+,MUN.PRVSN_DT
+,MUN.IND_3G
+,MUN.PRE_POST_IND 
+,MUN.SBSCRBR_TYPE
+,MUN.AREA_ID 
+,MUN.ENTRPRS_TYPE
+,MUN.ENTRPRS_NAME
+,MUN.OWNER_TYPE
+,MUN.BLLNG_CYCLE 
+,MUN.RISK_CATEG 
+,MUN.BLLNG_ADDR
+,MUN.IMSI
+,MUN.MSISDN
+,MUN.PARTY_ID 
+,MUN.ACCOUNT_ID 
+,MUN.RPT_CHURN_DT
+,MUN.LAST_RPT_CHURN_DT
+,MUN.ACTVN_EVENT 
+,MUN.STATUS_EFF_DT
+,case when (MUN.EV_DATE is null) and (select count(*) from DP_TDM_MI..EV_DATE where base_circle=#CircleCode#)=0 then TGT.EV_DATE
+	  when (MUN.EV_DATE is null) and (select count(*) from DP_TDM_MI..EV_DATE where base_circle=#CircleCode#)!=0 then MUN.EV_DATE
+	  ELSE MUN.EV_DATE END
+,case when (MUN.STATUS_REASON_CODE_DESCRIPTION is null) and (select count(*) from DP_TDM_MI..STATUS_REASON_CODE_DESCRIPTION where base_circle=#CircleCode#)=0 then TGT.STATUS_REASON_CODE_DESCRIPTION
+      when (MUN.STATUS_REASON_CODE_DESCRIPTION is null) and (select count(*) from DP_TDM_MI..STATUS_REASON_CODE_DESCRIPTION where base_circle=#CircleCode#)!=0 then MUN.STATUS_REASON_CODE_DESCRIPTION
+	  ELSE MUN.STATUS_REASON_CODE_DESCRIPTION END
+,case when (MUN.SEGMENT is null) and (select count(*) from DP_TDM_MI..SEGMENT where base_circle=#CircleCode#)=0 then TGT.SEGMENT
+     when (MUN.SEGMENT is null) and (select count(*) from DP_TDM_MI..SEGMENT where base_circle=#CircleCode#)!=0 then MUN.SEGMENT
+     ELSE MUN.SEGMENT END
+,case when (MUN.ZERO_USERS_FLG is null) and (select count(*) from DP_TDM_MI..ZERO_USERS_FLG where base_circle=#CircleCode#)=0 then TGT.ZERO_USERS_FLG
+     when (MUN.ZERO_USERS_FLG is null) and (select count(*) from DP_TDM_MI..ZERO_USERS_FLG where base_circle=#CircleCode#)!=0 then MUN.ZERO_USERS_FLG
+     ELSE MUN.ZERO_USERS_FLG END
+,case when (MUN.RETAILER_ID is null) and (select count(*) from DP_TDM_MI..RETAILER_CODE where base_circle=#CircleCode#)=0 then TGT.RETAILER_ID
+      when (MUN.RETAILER_ID is null) and (select count(*) from DP_TDM_MI..RETAILER_CODE where base_circle=#CircleCode#)!=0 then MUN.RETAILER_ID
+     ELSE  MUN.RETAILER_ID END
+,MUN.TV_DATE
+,MUN.AGE_ON_NETWORK 
+,case when (MUN.IMEI_PRIMARY is null) and (select count(*) from DP_TDM_MI..IMEI_PRIMARY where base_circle=#CircleCode#)=0 then TGT.IMEI_PRIMARY
+     when  (MUN.IMEI_PRIMARY is null) and (select count(*) from DP_TDM_MI..IMEI_PRIMARY where base_circle=#CircleCode#)!=0 then MUN.IMEI_PRIMARY
+     ELSE  MUN.IMEI_PRIMARY END
+,case when (MUN.IMEI_SECONDARY is null) and (select count(*) from DP_TDM_MI..IMEI_SECONDARY where base_circle=#CircleCode#)=0 then TGT.IMEI_SECONDARY
+      when (MUN.IMEI_SECONDARY is null) and (select count(*) from DP_TDM_MI..IMEI_SECONDARY where base_circle=#CircleCode#)!=0 then MUN.IMEI_SECONDARY
+      ELSE  MUN.IMEI_SECONDARY END
+,case when (MUN.SITE_ID is null) and ((select count(*) from DP_TDM_MI..CELL_SITE_ID where base_circle=#CircleCode#)=0 OR (select count(*) from DP_TDM_MI..SITE_ID)=0 ) then TGT.SITE_ID
+      when (MUN.SITE_ID is null) and (select count(*) from DP_TDM_MI..CELL_SITE_ID where base_circle=#CircleCode#)!=0 AND (select count(*) from DP_TDM_MI..SITE_ID)!=0 then MUN.SITE_ID
+      ELSE  MUN.SITE_ID END
+,case when (MUN.CELL_SITE_ID is null) and (select count(*) from DP_TDM_MI..CELL_SITE_ID where base_circle=#CircleCode#)=0 then TGT.CELL_SITE_ID
+      when (MUN.CELL_SITE_ID is null) and (select count(*) from DP_TDM_MI..CELL_SITE_ID where base_circle=#CircleCode#)!=0 then MUN.CELL_SITE_ID
+      ELSE  MUN.CELL_SITE_ID END
+,case when (MUN.DATE_OF_BIRTH is null) and (select count(*) from DP_TDM_MI..DATE_OF_BIRTH where base_circle=#CircleCode#)=0 then TGT.DATE_OF_BIRTH
+      when (MUN.DATE_OF_BIRTH is null) and (select count(*) from DP_TDM_MI..DATE_OF_BIRTH where base_circle=#CircleCode#)!=0 then MUN.DATE_OF_BIRTH
+      ELSE  MUN.DATE_OF_BIRTH END
+,case when (MUN.AGE_GROUP is null) and (select count(*) from DP_TDM_MI..DATE_OF_BIRTH where base_circle=#CircleCode#)=0 then TGT.AGE_GROUP
+      when (MUN.AGE_GROUP is null) and (select count(*) from DP_TDM_MI..DATE_OF_BIRTH where base_circle=#CircleCode#)!=0 then MUN.AGE_GROUP
+      ELSE  MUN.AGE_GROUP END
+,case when (MUN.TAC_PRIMARY_HANDSET is null) and (select count(*) from DP_TDM_MI..IMEI_PRIMARY where base_circle=#CircleCode#)=0 then TGT.TAC_PRIMARY_HANDSET
+      when (MUN.TAC_PRIMARY_HANDSET is null) and (select count(*) from DP_TDM_MI..IMEI_PRIMARY where base_circle=#CircleCode#)!=0 then MUN.TAC_PRIMARY_HANDSET
+      ELSE  MUN.TAC_PRIMARY_HANDSET END
+,case when (MUN.TAC_LATEST_HANDSET is null) and (select count(*) from DP_TDM_MI..IMEI_SECONDARY where base_circle=#CircleCode#)=0 then TGT.TAC_LATEST_HANDSET
+      when (MUN.TAC_LATEST_HANDSET is null) and (select count(*) from DP_TDM_MI..IMEI_SECONDARY where base_circle=#CircleCode#)!=0 then MUN.TAC_LATEST_HANDSET
+      ELSE  MUN.TAC_LATEST_HANDSET END
+,case when (MUN.ADDRESS is null) and (select count(*) from DP_TDM_MI..DATE_OF_BIRTH where base_circle=#CircleCode#)=0 then TGT.ADDRESS
+      when (MUN.ADDRESS is null) and (select count(*) from DP_TDM_MI..DATE_OF_BIRTH where base_circle=#CircleCode#)!=0 then MUN.ADDRESS
+      ELSE  MUN.ADDRESS END
+,case when (MUN.EMAIL is null) and (select count(*) from DP_TDM_MI..EMAIL_DND_FLAG where base_circle=#CircleCode#)=0 then TGT.EMAIL
+      when (MUN.EMAIL is null) and (select count(*) from DP_TDM_MI..EMAIL_DND_FLAG where base_circle=#CircleCode#)!=0 then MUN.EMAIL
+      ELSE  MUN.EMAIL END
+,case when (MUN.DND_FLAG is null) and (select count(*) from DP_TDM_MI..EMAIL_DND_FLAG where base_circle=#CircleCode#)=0 then TGT.DND_FLAG
+      when (MUN.DND_FLAG is null) and (select count(*) from DP_TDM_MI..EMAIL_DND_FLAG where base_circle=#CircleCode#)!=0 then MUN.DND_FLAG
+      ELSE  MUN.DND_FLAG END
+,case when (MUN.CS_SEGMENT_DESC is null) and (select count(*) from DP_TDM_MI..CS_SEGMENT where base_circle=#CircleCode#)=0 then TGT.CS_SEGMENT_DESC
+      when (MUN.CS_SEGMENT_DESC is null) and (select count(*) from DP_TDM_MI..CS_SEGMENT where base_circle=#CircleCode#)!=0 then MUN.CS_SEGMENT_DESC
+      ELSE  MUN.CS_SEGMENT_DESC END
+,case when (MUN.TARIFF_PLAN_ID_CODE is null) and (select count(*) from DP_TDM_MI..TARIFF_PLAN where base_circle=#CircleCode#)=0 then TGT.TARIFF_PLAN_ID_CODE
+      when (MUN.TARIFF_PLAN_ID_CODE is null) and (select count(*) from DP_TDM_MI..TARIFF_PLAN where base_circle=#CircleCode#)!=0 then MUN.TARIFF_PLAN_ID_CODE
+      ELSE  MUN.TARIFF_PLAN_ID_CODE END
+,MUN.STATUS_DATE
+,case when (MUN.ACQUISITION_CHANNEL is null) and (select count(*) from DP_TDM_MI..ACQUISITION_CHANNEL where base_circle=#CircleCode#)=0 then TGT.ACQUISITION_CHANNEL
+      when (MUN.ACQUISITION_CHANNEL is null) and (select count(*) from DP_TDM_MI..ACQUISITION_CHANNEL where base_circle=#CircleCode#)!=0 then MUN.ACQUISITION_CHANNEL
+      ELSE  MUN.ACQUISITION_CHANNEL END
+from DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_MINUS_#CircleCode# MUN
+INNER JOIN 
+DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode# TGT
+on
+MUN.SUBS_ID=TGT.SUBS_ID 
+WHERE TGT.REC_CLOSE_DT='2899-09-09' ;
+
+/*===========================================================================================================================
+	Step 3 : Deleting Matching records from minus table so that only new records will remain in minus table to insert.
+============================================================================================================================*/
+
+
+DELETE FROM DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_MINUS_#CircleCode#
+WHERE SUBS_ID IN (SELECT SUBS_ID
+from DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_UPD_#CircleCode#) ;
+
+/*========================================================================================
+Step 4: Insertion of New records which type-2 related column has been changed 
+=========================================================================================*/
+
+INSERT INTO DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#
+(
+ SKEY 
+,SUBS_ID 
+,BASE_CIRCLE 
+,UNBR_DT
+,CAF_IND
+,CAF_DT
+,FR_DT
+,FRC_DT
+,LAST_RES_DT
+,ACTVN_DT
+,STATUS
+,STATUS_CHG_REASON 
+,AGE 
+,GENDER
+,MNP_IND 
+--,PORT_IN_OUT_DT
+,PORT_OUT_DT
+,PORT_IN_DT
+,IN_OPRTR
+,OUT_OPRTR
+,PRVSN_3G
+,PRVSN_DT
+,IND_3G
+,PRE_POST_IND 
+,SBSCRBR_TYPE
+,AREA_ID
+,ENTRPRS_TYPE
+,ENTRPRS_NAME
+,OWNER_TYPE
+,BLLNG_CYCLE 
+,RISK_CATEG 
+,BLLNG_ADDR
+,IMSI
+,MSISDN
+,PARTY_ID 
+,ACCOUNT_ID 
+,RPT_CHURN_DT
+,LAST_RPT_CHURN_DT
+,ACTVN_EVENT 
+,STATUS_EFF_DT
+,EV_DATE
+,STATUS_REASON_CODE_DESCRIPTION
+,SEGMENT
+,ZERO_USERS_FLG 
+,RETAILER_ID
+,TV_DATE
+,AGE_ON_NETWORK 
+,IMEI_PRIMARY
+,IMEI_SECONDARY
+,SITE_ID
+,CELL_SITE_ID
+,DATE_OF_BIRTH
+,AGE_GROUP
+,TAC_PRIMARY_HANDSET
+,TAC_LATEST_HANDSET
+,ADDRESS
+,EMAIL
+,DND_FLAG
+,CS_SEGMENT_DESC
+,TARIFF_PLAN_ID_CODE
+,STATUS_DATE
+,ACQUISITION_CHANNEL
+,EXECUTION_ID 
+,REC_OPEN_DT
+,REC_CLOSE_DT
+,INSERT_DT
+)
+select 
+(CASE 
+WHEN (select MAX(SKEY) from  DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#) IS NULL
+THEN 1
+ELSE (select MAX(SKEY) from  DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#) END ) + ROW_NUMBER() OVER (ORDER BY NULL)
+,TGT.SUBS_ID 
+,TGT.BASE_CIRCLE 
+,TGT.UNBR_DT
+,TGT.CAF_IND
+,TGT.CAF_DT
+,TGT.FR_DT
+,TGT.FRC_DT
+,TGT.LAST_RES_DT
+,TGT.ACTVN_DT
+,UPD.STATUS
+,TGT.STATUS_CHG_REASON 
+,TGT.AGE 
+,TGT.GENDER
+,TGT.MNP_IND 
+--,TGT.PORT_IN_OUT_DT
+,TGT.PORT_OUT_DT
+,TGT.PORT_IN_DT
+,TGT.IN_OPRTR
+,TGT.OUT_OPRTR
+,TGT.PRVSN_3G
+,TGT.PRVSN_DT
+,TGT.IND_3G
+,UPD.PRE_POST_IND 
+,UPD.SBSCRBR_TYPE
+,TGT.AREA_ID 
+,TGT.ENTRPRS_TYPE
+,TGT.ENTRPRS_NAME
+,TGT.OWNER_TYPE
+,TGT.BLLNG_CYCLE 
+,UPD.RISK_CATEG 
+,TGT.BLLNG_ADDR
+,UPD.IMSI
+,TGT.MSISDN
+,TGT.PARTY_ID 
+,TGT.ACCOUNT_ID 
+,TGT.RPT_CHURN_DT
+,TGT.LAST_RPT_CHURN_DT
+,TGT.ACTVN_EVENT 
+,TGT.STATUS_EFF_DT
+,TGT.EV_DATE
+,TGT.STATUS_REASON_CODE_DESCRIPTION
+,UPD.SEGMENT
+,UPD.ZERO_USERS_FLG 
+,TGT.RETAILER_ID
+,TGT.TV_DATE
+,TGT.AGE_ON_NETWORK 
+,UPD.IMEI_PRIMARY
+,TGT.IMEI_SECONDARY
+,TGT.SITE_ID
+,TGT.CELL_SITE_ID
+,TGT.DATE_OF_BIRTH
+,TGT.AGE_GROUP
+,TGT.TAC_PRIMARY_HANDSET
+,TGT.TAC_LATEST_HANDSET
+,TGT.ADDRESS
+,TGT.EMAIL
+,TGT.DND_FLAG
+,UPD.CS_SEGMENT_DESC
+,UPD.TARIFF_PLAN_ID_CODE
+,TGT.STATUS_DATE
+,TGT.ACQUISITION_CHANNEL
+,#ExecutionId#
+,current_date-1
+,'2899-09-09'
+,current_date
+from DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_UPD_#CircleCode# UPD
+LEFT OUTER JOIN 
+DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode# TGT
+ON 
+UPD.SUBS_ID= TGT.SUBS_ID
+AND UPD.SKEY=TGT.SKEY	
+and ( nvl(UPD.IMSI, '#') <> nvl(TGT.IMSI, '#')
+OR nvl(UPD.IMEI_PRIMARY, '#') <> nvl(TGT.IMEI_PRIMARY, '#')
+OR nvl(UPD.STATUS, '#') <> nvl(TGT.STATUS, '#')  
+OR nvl(UPD.PRE_POST_IND, -99) <> nvl(TGT.PRE_POST_IND, -99)
+OR nvl(UPD.SBSCRBR_TYPE, '#') <> nvl(TGT.SBSCRBR_TYPE, '#') 
+OR nvl(UPD.RISK_CATEG, '#') <> nvl(TGT.RISK_CATEG, '#')
+OR nvl(UPD.SEGMENT, '#') <> nvl(TGT.SEGMENT, '#') 
+OR nvl(UPD.ZERO_USERS_FLG, -99) <> nvl(TGT.ZERO_USERS_FLG, -99)
+OR nvl(UPD.CS_SEGMENT_DESC, '#') <> nvl(TGT.CS_SEGMENT_DESC, '#') 
+OR nvl(UPD.TARIFF_PLAN_ID_CODE, '#') <> nvl(TGT.TARIFF_PLAN_ID_CODE, '#'))
+WHERE TGT.REC_CLOSE_DT='2899-09-09' ;
+
+/*=============================================================
+	Step 5: Closing Type-2 Matching History Records
+==============================================================*/
+
+update DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#  SET REC_CLOSE_DT=current_date-1 , INSERT_DT=CURRENT_DATE
+where REC_CLOSE_DT='2899-09-09'
+AND SKEY in
+(
+select UPD.SKEY from DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_UPD_#CircleCode# UPD
+inner join 
+DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode# TGT
+on
+UPD.SUBS_ID= TGT.SUBS_ID
+AND UPD.SKEY=TGT.SKEY
+and ( nvl(UPD.IMSI, '#') <> nvl(TGT.IMSI, '#')
+OR nvl(UPD.IMEI_PRIMARY, '#') <> nvl(TGT.IMEI_PRIMARY, '#')
+OR nvl(UPD.STATUS, '#') <> nvl(TGT.STATUS, '#')  
+OR nvl(UPD.PRE_POST_IND, -99) <> nvl(TGT.PRE_POST_IND, -99)
+OR nvl(UPD.SBSCRBR_TYPE, '#') <> nvl(TGT.SBSCRBR_TYPE, '#') 
+OR nvl(UPD.RISK_CATEG, '#') <> nvl(TGT.RISK_CATEG, '#')
+OR nvl(UPD.SEGMENT, '#') <> nvl(TGT.SEGMENT, '#') 
+OR nvl(UPD.ZERO_USERS_FLG, -99) <> nvl(TGT.ZERO_USERS_FLG, -99)
+OR nvl(UPD.CS_SEGMENT_DESC, '#') <> nvl(TGT.CS_SEGMENT_DESC, '#') 
+OR nvl(UPD.TARIFF_PLAN_ID_CODE, '#') <> nvl(TGT.TARIFF_PLAN_ID_CODE, '#'))
+WHERE TGT.REC_CLOSE_DT='2899-09-09'
+);
+
+
+/*====================================================================================================
+	Step 6: Insertion of Pure New records which are not available in  DIM_MMFA_SUBSCRIBER_MSISDN
+=====================================================================================================*/
+
+INSERT INTO DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#
+(
+ SKEY 
+,SUBS_ID 
+,BASE_CIRCLE 
+,UNBR_DT
+,CAF_IND
+,CAF_DT
+,FR_DT
+,FRC_DT
+,LAST_RES_DT
+,ACTVN_DT
+,STATUS
+,STATUS_CHG_REASON 
+,AGE 
+,GENDER
+,MNP_IND 
+--,PORT_IN_OUT_DT
+,PORT_OUT_DT
+,PORT_IN_DT
+,IN_OPRTR
+,OUT_OPRTR
+,PRVSN_3G
+,PRVSN_DT
+,IND_3G
+,PRE_POST_IND 
+,SBSCRBR_TYPE
+,AREA_ID
+,ENTRPRS_TYPE
+,ENTRPRS_NAME
+,OWNER_TYPE
+,BLLNG_CYCLE 
+,RISK_CATEG 
+,BLLNG_ADDR
+,IMSI
+,MSISDN
+,PARTY_ID 
+,ACCOUNT_ID 
+,RPT_CHURN_DT
+,LAST_RPT_CHURN_DT
+,ACTVN_EVENT 
+,STATUS_EFF_DT
+,EV_DATE
+,STATUS_REASON_CODE_DESCRIPTION
+,SEGMENT
+,ZERO_USERS_FLG 
+,RETAILER_ID
+,TV_DATE
+,AGE_ON_NETWORK 
+,IMEI_PRIMARY
+,IMEI_SECONDARY
+,SITE_ID
+,CELL_SITE_ID
+,DATE_OF_BIRTH
+,AGE_GROUP
+,TAC_PRIMARY_HANDSET
+,TAC_LATEST_HANDSET
+,ADDRESS
+,EMAIL
+,DND_FLAG
+,CS_SEGMENT_DESC
+,TARIFF_PLAN_ID_CODE
+,STATUS_DATE
+,ACQUISITION_CHANNEL
+,EXECUTION_ID 
+,REC_OPEN_DT
+,REC_CLOSE_DT
+,INSERT_DT
+)
+select 
+(CASE 
+WHEN (select MAX(SKEY) from  DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#) IS NULL
+THEN 1
+ELSE (select MAX(SKEY) from  DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#) END) + ROW_NUMBER() OVER (ORDER BY NULL)
+,MUN.SUBS_ID 
+,MUN.BASE_CIRCLE 
+,MUN.UNBR_DT
+,MUN.CAF_IND
+,MUN.CAF_DT
+,MUN.FR_DT
+,MUN.FRC_DT
+,MUN.LAST_RES_DT
+,MUN.ACTVN_DT
+,MUN.STATUS
+,MUN.STATUS_CHG_REASON 
+,MUN.AGE 
+,MUN.GENDER
+,MUN.MNP_IND 
+--,MUN.PORT_IN_OUT_DT
+,MUN.PORT_OUT_DT
+,MUN.PORT_IN_DT
+,MUN.IN_OPRTR
+,MUN.OUT_OPRTR
+,MUN.PRVSN_3G
+,MUN.PRVSN_DT
+,MUN.IND_3G
+,MUN.PRE_POST_IND 
+,MUN.SBSCRBR_TYPE
+,MUN.AREA_ID 
+,MUN.ENTRPRS_TYPE
+,MUN.ENTRPRS_NAME
+,MUN.OWNER_TYPE
+,MUN.BLLNG_CYCLE 
+,MUN.RISK_CATEG 
+,MUN.BLLNG_ADDR
+,MUN.IMSI
+,MUN.MSISDN
+,MUN.PARTY_ID 
+,MUN.ACCOUNT_ID 
+,MUN.RPT_CHURN_DT
+,MUN.LAST_RPT_CHURN_DT
+,MUN.ACTVN_EVENT 
+,MUN.STATUS_EFF_DT
+,MUN.EV_DATE
+,MUN.STATUS_REASON_CODE_DESCRIPTION
+,MUN.SEGMENT
+,MUN.ZERO_USERS_FLG 
+,MUN.RETAILER_ID
+,MUN.TV_DATE
+,MUN.AGE_ON_NETWORK 
+,MUN.IMEI_PRIMARY
+,MUN.IMEI_SECONDARY
+,MUN.SITE_ID
+,MUN.CELL_SITE_ID
+,MUN.DATE_OF_BIRTH
+,MUN.AGE_GROUP
+,MUN.TAC_PRIMARY_HANDSET
+,MUN.TAC_LATEST_HANDSET
+,MUN.ADDRESS
+,MUN.EMAIL
+,MUN.DND_FLAG
+,MUN.CS_SEGMENT_DESC
+,MUN.TARIFF_PLAN_ID_CODE
+,MUN.STATUS_DATE
+,MUN.ACQUISITION_CHANNEL
+,#ExecutionId#
+,current_date-1
+,'2899-09-09'
+,CURRENT_DATE
+from DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_MINUS_#CircleCode# MUN ;
+
+/*===========================================================================
+	Step 7: Update the changes for  type-1 Related Columns
+============================================================================*/
+
+UPDATE DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_#CircleCode#  TGT
+SET
+TGT.UNBR_DT= UPD.UNBR_DT
+,TGT.CAF_IND= UPD.CAF_IND
+,TGT.CAF_DT= UPD.CAF_DT
+,TGT.FR_DT= UPD.FR_DT
+,TGT.FRC_DT= UPD.FRC_DT
+,TGT.LAST_RES_DT=UPD.LAST_RES_DT
+,TGT.ACTVN_DT= UPD.ACTVN_DT
+,TGT.STATUS_CHG_REASON= UPD.STATUS_CHG_REASON 
+,TGT.AGE= UPD.AGE 
+,TGT.GENDER= UPD.GENDER
+,TGT.MNP_IND= UPD.MNP_IND 
+--,TGT.PORT_IN_OUT_DT= UPD.PORT_IN_OUT_DT
+,TGT.PORT_OUT_DT=UPD.PORT_OUT_DT
+,TGT.PORT_IN_DT=UPD.PORT_IN_DT
+,TGT.IN_OPRTR= UPD.IN_OPRTR
+,TGT.OUT_OPRTR= UPD.OUT_OPRTR
+,TGT.PRVSN_3G= UPD.PRVSN_3G
+,TGT.PRVSN_DT= UPD.PRVSN_DT
+,TGT.IND_3G= UPD.IND_3G
+,TGT.AREA_ID= UPD.AREA_ID 
+,TGT.ENTRPRS_TYPE= UPD.ENTRPRS_TYPE
+,TGT.ENTRPRS_NAME= UPD.ENTRPRS_NAME
+,TGT.OWNER_TYPE= UPD.OWNER_TYPE
+,TGT.BLLNG_CYCLE= UPD.BLLNG_CYCLE 
+,TGT.BLLNG_ADDR= UPD.BLLNG_ADDR
+,TGT.MSISDN= UPD.MSISDN
+,TGT.PARTY_ID= UPD.PARTY_ID
+,TGT.ACCOUNT_ID= UPD.ACCOUNT_ID 
+,TGT.RPT_CHURN_DT= UPD.RPT_CHURN_DT
+,TGT.LAST_RPT_CHURN_DT= UPD.LAST_RPT_CHURN_DT
+,TGT.ACTVN_EVENT= UPD.ACTVN_EVENT 
+,TGT.STATUS_EFF_DT= UPD.STATUS_EFF_DT
+,TGT.EV_DATE= UPD.EV_DATE
+,TGT.STATUS_REASON_CODE_DESCRIPTION= UPD.STATUS_REASON_CODE_DESCRIPTION
+,TGT.RETAILER_ID= UPD.RETAILER_ID
+,TGT.TV_DATE= UPD.TV_DATE
+,TGT.AGE_ON_NETWORK= UPD.AGE_ON_NETWORK
+,TGT.IMEI_SECONDARY= UPD.IMEI_SECONDARY
+,TGT.SITE_ID=UPD.SITE_ID
+,TGT.CELL_SITE_ID= UPD.CELL_SITE_ID
+,TGT.DATE_OF_BIRTH= UPD.DATE_OF_BIRTH
+,TGT.AGE_GROUP= UPD.AGE_GROUP
+,TGT.TAC_PRIMARY_HANDSET= UPD.TAC_PRIMARY_HANDSET
+,TGT.TAC_LATEST_HANDSET= UPD.TAC_LATEST_HANDSET
+,TGT.ADDRESS= UPD.ADDRESS
+,TGT.EMAIL= UPD.EMAIL
+,TGT.DND_FLAG= UPD.DND_FLAG
+,TGT.STATUS_DATE= UPD.STATUS_DATE
+,TGT.ACQUISITION_CHANNEL= UPD.ACQUISITION_CHANNEL
+,TGT.INSERT_DT=CURRENT_DATE
+FROM 
+DP_TDM_MI..DIM_MMFA_SUBSCRIBER_MSISDN_UPD_#CircleCode# UPD
+WHERE 
+	TGT.SUBS_ID=UPD.SUBS_ID
+	AND TGT.REC_CLOSE_DT='2899-09-09'
+AND (
+   nvl(TGT.UNBR_DT, '#') <> nvl(UPD.UNBR_DT, '#')
+OR nvl(TGT.CAF_IND, '#') <> nvl(UPD.CAF_IND, '#')
+OR nvl(TGT.CAF_DT, '1900-01-01') <> nvl(UPD.CAF_DT, '1900-01-01')
+OR nvl(TGT.FR_DT, '#') <> nvl(UPD.FR_DT, '#')
+OR nvl(TGT.FRC_DT, '#') <> nvl(UPD.FRC_DT, '#')
+OR nvl(TGT.LAST_RES_DT, '1900-01-01') <> nvl(UPD.LAST_RES_DT, '1900-01-01')
+OR nvl(TGT.ACTVN_DT, '1900-01-01') <> nvl(UPD.ACTVN_DT, '1900-01-01')
+OR nvl(TGT.STATUS_CHG_REASON, -99) <> nvl(UPD.STATUS_CHG_REASON, -99) 
+OR nvl(TGT.AGE, -99) <> nvl(UPD.AGE, -99) 
+OR nvl(TGT.GENDER, '#') <> nvl(UPD.GENDER, '#')
+OR nvl(TGT.MNP_IND, -99) <> nvl(UPD.MNP_IND, -99) 
+-- OR nvl(TGT.PORT_IN_OUT_DT, '1900-01-01') <> nvl(UPD.PORT_IN_OUT_DT, '1900-01-01')
+OR nvl(TGT.PORT_OUT_DT, '1900-01-01') <> nvl(UPD.PORT_OUT_DT, '1900-01-01')
+OR nvl(TGT.PORT_IN_DT, '1900-01-01') <> nvl(UPD.PORT_IN_DT, '1900-01-01')
+OR nvl(TGT.IN_OPRTR, '#') <> nvl(UPD.IN_OPRTR, '#')
+OR nvl(TGT.OUT_OPRTR, '#') <> nvl(UPD.OUT_OPRTR, '#')
+OR nvl(TGT.PRVSN_3G, '#') <> nvl(UPD.PRVSN_3G, '#')
+OR nvl(TGT.PRVSN_DT, '1900-01-01') <> nvl(UPD.PRVSN_DT, '1900-01-01')
+OR nvl(TGT.IND_3G, '#') <> nvl(UPD.IND_3G, '#')
+OR nvl(TGT.AREA_ID, -99) <> nvl(UPD.AREA_ID, -99) 
+OR nvl(TGT.ENTRPRS_TYPE, '#') <> nvl(UPD.ENTRPRS_TYPE, '#')
+OR nvl(TGT.ENTRPRS_NAME, '#') <> nvl(UPD.ENTRPRS_NAME, '#')
+OR nvl(TGT.OWNER_TYPE, '#') <> nvl(UPD.OWNER_TYPE, '#')
+OR nvl(TGT.BLLNG_CYCLE, '#') <> nvl(UPD.BLLNG_CYCLE, '#') 
+OR nvl(TGT.BLLNG_ADDR, '#') <> nvl(UPD.BLLNG_ADDR, '#')
+OR nvl(TGT.MSISDN, -99) <> nvl(UPD.MSISDN, -99)
+OR nvl(TGT.PARTY_ID, -99) <> nvl(UPD.PARTY_ID, -99)
+OR nvl(TGT.ACCOUNT_ID, -99) <> nvl(UPD.ACCOUNT_ID, -99) 
+OR nvl(TGT.RPT_CHURN_DT, '1900-01-01') <> nvl(UPD.RPT_CHURN_DT, '1900-01-01')
+OR nvl(TGT.LAST_RPT_CHURN_DT, '1900-01-01') <> nvl(UPD.LAST_RPT_CHURN_DT, '1900-01-01')
+OR nvl(TGT.ACTVN_EVENT, -99) <> nvl(UPD.ACTVN_EVENT, -99) 
+OR nvl(TGT.STATUS_EFF_DT, '1900-01-01') <> nvl(UPD.STATUS_EFF_DT, '1900-01-01')
+OR nvl(TGT.EV_DATE, '#') <> nvl(UPD.EV_DATE, '#')
+OR nvl(TGT.STATUS_REASON_CODE_DESCRIPTION, '#') <> nvl(UPD.STATUS_REASON_CODE_DESCRIPTION, '#')
+OR nvl(TGT.RETAILER_ID, '#') <> nvl(UPD.RETAILER_ID, '#')
+OR nvl(TGT.TV_DATE, '#') <> nvl(UPD.TV_DATE, '#')
+OR nvl(TGT.AGE_ON_NETWORK, -99) <> nvl(UPD.AGE_ON_NETWORK, -99)
+OR nvl(TGT.IMEI_SECONDARY, '#') <> nvl(UPD.IMEI_SECONDARY, '#')
+OR nvl(TGT.SITE_ID, '#') <> nvl(UPD.SITE_ID, '#')
+OR nvl(TGT.CELL_SITE_ID, '#') <> nvl(UPD.CELL_SITE_ID, '#')
+OR nvl(TGT.DATE_OF_BIRTH, '1900-01-01') <> nvl(UPD.DATE_OF_BIRTH, '1900-01-01')
+OR nvl(TGT.AGE_GROUP, '#') <> nvl(UPD.AGE_GROUP, '#')
+OR nvl(TGT.TAC_PRIMARY_HANDSET, '#') <> nvl(UPD.TAC_PRIMARY_HANDSET, '#')
+OR nvl(TGT.TAC_LATEST_HANDSET, '#') <> nvl(UPD.TAC_LATEST_HANDSET, '#')
+OR nvl(TGT.ADDRESS, '#') <> nvl(UPD.ADDRESS, '#')
+OR nvl(TGT.EMAIL, '#') <> nvl(UPD.EMAIL, '#')
+OR nvl(TGT.DND_FLAG, '#') <> nvl(UPD.DND_FLAG, '#')
+OR nvl(TGT.STATUS_DATE, '1900-01-01') <> nvl(UPD.STATUS_DATE, '1900-01-01')
+OR nvl(TGT.ACQUISITION_CHANNEL, '#') <> nvl(UPD.ACQUISITION_CHANNEL, '#'));
+
+/*=======================================================================
+	The End of Type-2 and Type-1 Logic  
+========================================================================*/
+

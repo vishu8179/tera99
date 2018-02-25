@@ -1,0 +1,244 @@
+show view DP_VEDW.SUBSCRIPTION_STATUS_HISTORY ;
+
+show  Teradata BTEQ 14.00.00.09 for IBM-AIX.
+     $
+ *** Failure 3706 Syntax error: Expecting keyword STAT, STATS, or STATISTICS
+ .
+                Statement# 1, Info =6
+ *** Total elapsed time was 1 second.
+
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+show view DP_VEDW.SUBSCRIPTION_STATUS_HISTORY ;
+
+show view DP_VEDW.SUBSCRIPTION_STATUS_HISTORY ;
+
+ *** Text of DDL statement returned.
+ *** Total elapsed time was 1 second.
+
+---------------------------------------------------------------------------
+Replace View DP_VEDW.SUBSCRIPTION_STATUS_HISTORY AS locking table DP_TEDW_N
+CDR.SUBSCRIPTION_STATUS_HISTORY for access select * from DP_TEDW_NCDR.SUBS
+CRIPTION_STATUS_HISTORY;
+
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+
+
+
+
+help table DP_TEDW_NCDR.SUBS
+CRIPTION_STATUS_HISTORY ;
+
+help table DP_TEDW_NCDR.SUBS
+CRIPTION_STATUS_HISTORY ;
+
+CRIPTION_STATUS_HISTORY ;
+                         $
+ *** Failure 3706 Syntax error: Unexpected option.
+                Statement# 1, Info =55
+ *** Total elapsed time was 1 second.
+
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+help table DP_TEDW_NCDR.SUBSCRIPTION_STATUS_HISTORY ;
+
+help table DP_TEDW_NCDR.SUBSCRIPTION_STATUS_HISTORY ;
+
+ *** Help information returned. 11 rows.
+ *** Total elapsed time was 1 second.
+
+Column Name                    Type Comment
+------------------------------ ---- ---------------------------------------
+subs_id                        I    ?
+subs_status_type_cd            I2   ?
+subs_status_eff_dt             DA   ?
+subs_status_resn_cd            I    ?
+subs_status_end_dt             DA   ?
+subs_status_eff_tm             AT   ?
+subs_status_end_tm             AT   ?
+open_date                      DA   ?
+close_date                     DA   ?
+execution_id                   I    ?
+source_system_code             I2   ?
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+
+
+help view DP_VEDW.SUBSCRIPTION_STATUS_HISTORY ;
+
+help view DP_VEDW.SUBSCRIPTION_STATUS_HISTORY ;
+
+ *** Help information returned. 11 rows.
+ *** Total elapsed time was 1 second.
+
+Column Name                    Type Comment
+------------------------------ ---- ---------------------------------------
+subs_id                        ?    ?
+subs_status_type_cd            ?    ?
+subs_status_eff_dt             ?    ?
+subs_status_resn_cd            ?    ?
+subs_status_end_dt             ?    ?
+subs_status_eff_tm             ?    ?
+subs_status_end_tm             ?    ?
+open_date                      ?    ?
+close_date                     ?    ?
+execution_id                   ?    ?
+source_system_code             ?    ?
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+show view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST;
+
+show view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST;
+
+ *** Text of DDL statement returned.
+ *** Total elapsed time was 1 second.
+
+---------------------------------------------------------------------------
+replace view DP_VEDW.SUBSCRIPTION_VLR_STATUS_HIST       as lock row for access se
+lect * from DP_TEDW_NCDR.SUBSCRIPTION_VLR_STATUS_HIST;
+
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+help view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST
+;
+
+help view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST
+;
+
+ *** Help information returned. 19 rows.
+ *** Total elapsed time was 1 second.
+
+Column Name                    Type Comment
+------------------------------ ---- ---------------------------------------
+CIRCLE_CODE                    ?    ?
+SUBS_ID                        ?    ?
+ACCESS_METHOD_ID               ?    ?
+IMSI                           ?    ?
+IMEI                           ?    ?
+ROAMING_FLAG                   ?    ?
+LAC                            ?    ?
+CI                             ?    ?
+CELL_SITE_ID                   ?    ?
+VLR_ATT_STATUS                 ?    ?
+LAST_ACTIVITY_DATE             ?    ?
+START_DATE                     ?    ?
+END_DATE                       ?    ?
+CHURN_STATUS                   ?    ?
+LAST_UPDATE_DATE               ?    ?
+LAST_ACTIVITY_TIMESTAMP        ?    ?
+FILE_DATE                      ?    ?
+VLR_FILE_ID                    ?    ?
+EXECUTION_ID                   ?    ?
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+help view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST
+;
+
+help view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST
+;
+
+ *** Help information returned. 19 rows.
+ *** Total elapsed time was 1 second.
+
+Column Name                    Type Comment
+------------------------------ ---- ---------------------------------------
+CIRCLE_CODE                    ?    ?
+SUBS_ID                        ?    ?
+ACCESS_METHOD_ID               ?    ?
+IMSI                           ?    ?
+IMEI                           ?    ?
+ROAMING_FLAG                   ?    ?
+LAC                            ?    ?
+CI                             ?    ?
+CELL_SITE_ID                   ?    ?
+VLR_ATT_STATUS                 ?    ?
+LAST_ACTIVITY_DATE             ?    ?
+START_DATE                     ?    ?
+END_DATE                       ?    ?
+CHURN_STATUS                   ?    ?
+LAST_UPDATE_DATE               ?    ?
+LAST_ACTIVITY_TIMESTAMP        ?    ?
+FILE_DATE                      ?    ?
+VLR_FILE_ID                    ?    ?
+EXECUTION_ID                   ?    ?
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+show view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST;
+
+show view dp_vedw.SUBSCRIPTION_VLR_STATUS_HIST;
+
+ *** Text of DDL statement returned.
+ *** Total elapsed time was 1 second.
+
+---------------------------------------------------------------------------
+replace view DP_VEDW.SUBSCRIPTION_VLR_STATUS_HIST       as lock row for access se
+lect * from DP_TEDW_NCDR.SUBSCRIPTION_VLR_STATUS_HIST;
+
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+show table DP_TEDW_NCDR.SUBSCRIPTION_VLR_STATUS_HIST;
+
+show table DP_TEDW_NCDR.SUBSCRIPTION_VLR_STATUS_HIST;
+
+ *** Text of DDL statement returned.
+ *** Total elapsed time was 1 second.
+
+---------------------------------------------------------------------------
+CREATE MULTISET TABLE DP_TEDW_NCDR.SUBSCRIPTION_VLR_STATUS_HIST ,NO FALLBAC
+K ,
+     NO BEFORE JOURNAL,
+     NO AFTER JOURNAL,
+     CHECKSUM = DEFAULT,
+     DEFAULT MERGEBLOCKRATIO
+     (
+      CIRCLE_CODE INTEGER,
+      SUBS_ID INTEGER,
+      ACCESS_METHOD_ID DECIMAL(18,0),
+      IMSI DECIMAL(18,0),
+      IMEI VARCHAR(20) CHARACTER SET LATIN NOT CASESPECIFIC,
+      ROAMING_FLAG VARCHAR(10) CHARACTER SET LATIN NOT CASESPECIFIC,
+      LAC INTEGER,
+      CI INTEGER,
+      CELL_SITE_ID DECIMAL(18,0),
+      VLR_ATT_STATUS VARCHAR(10) CHARACTER SET LATIN NOT CASESPECIFIC,
+      LAST_ACTIVITY_DATE DATE FORMAT 'YYYY-MM-DD',
+      START_DATE DATE FORMAT 'YYYY-MM-DD',
+      END_DATE DATE FORMAT 'YYYY-MM-DD',
+      CHURN_STATUS VARCHAR(10) CHARACTER SET LATIN NOT CASESPECIFIC,
+      LAST_UPDATE_DATE DATE FORMAT 'YYYY-MM-DD',
+      LAST_ACTIVITY_TIMESTAMP VARCHAR(20) CHARACTER SET LATIN NOT CASESPEC
+IFIC,
+      FILE_DATE DATE FORMAT 'YYYY-MM-DD',
+      VLR_FILE_ID INTEGER,
+      EXECUTION_ID INTEGER)
+PRIMARY INDEX ( CIRCLE_CODE ,SUBS_ID ,IMSI ,START_DATE )
+PARTITION BY CASE_N(
+CIRCLE_CODE =  10 ,
+CIRCLE_CODE =  20 ,
+CIRCLE_CODE =  30 ,
+CIRCLE_CODE =  35 ,
+CIRCLE_CODE =  40 ,
+CIRCLE_CODE =  45 ,
+CIRCLE_CODE =  50 ,
+CIRCLE_CODE =  55 ,
+CIRCLE_CODE =  60 ,
+CIRCLE_CODE =  65 ,
+CIRCLE_CODE =  70 ,
+CIRCLE_CODE =  75 ,
+CIRCLE_CODE =  80 ,
+CIRCLE_CODE =  81 ,
+CIRCLE_CODE =  82 ,
+CIRCLE_CODE =  83 ,
+CIRCLE_CODE =  84 ,
+CIRCLE_CODE =  85 ,
+CIRCLE_CODE =  86 ,
+CIRCLE_CODE =  87 ,
+CIRCLE_CODE =  88 ,
+CIRCLE_CODE =  90 ,
+CIRCLE_CODE =  95 ,
+ NO CASE OR UNKNOWN);
+
+
+ BTEQ -- Enter your SQL request or BTEQ command:
+

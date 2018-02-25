@@ -1,0 +1,191 @@
+Unix:
+==============
+print first record
+awk 'NR==1' Marks.txt
+print last line in awk?
+awk '{k=$0}END{print k}' Marks.txt
+print last but one record in awk?
+awk '{ A=B; B=$0 } END { print A }' Marks.txt
+display last 4 lines in awk
+awk 'BEGIN{"wc -l < Marks.txt" | getline b}{if(NR>b-4) print}' Marks.txt
+
+How to export & import dsx files from unix?
+zip & unzip commands?
+what is the command to excute datastage job from unix?
+Display 25 record from file?
+I/p:
+01/3/2015
+1/02/2015
+o/p:
+01/03/2015
+01/02/2015 
+Delete blank spaces in file?
+How to find recent file in a directory?
+Ans:mtimes
+Ex:
+find . -mtime 0   # find files modified between now and 1 day ago
+                  # (i.e., within the past 24 hours)
+find . -mtime -1  # find files modified less than 1 day ago
+                  # (i.e., within the past 24 hours, as before)
+find . -mtime 1   # find files modified between 24 and 48 hours ago
+find . -mtime +1  # find files modified more than 48 hours ago
+
+find . -mmin +5 -mmin -10 # find files modified between
+                          # 6 and 9 minutes ago 
+Execution of SED?
+Find version number in unix?
+Ans:oslevel
+sort columns in a directory?
+What is nohup?
+find difference between two files in unix?
+Ans: diff a b
+Database:
+===========
+RANK and DENSE_RANK?
+What is ROWNUM and ROWID with example?
+How to find Nth Max of salary from table?
+Remove duplicates?
+Table A 
+1
+1
+1
+Table B
+1
+1
+1
+1
+1
+Find Inner,Left,Right,Fullouter Join?
+Why Netezza faster than Oracle?
+Indexes?
+What is Bulk Load in Oracle?
+Find nth max sal?
+SELECT empno, salary
+FROM
+(SELECT empno, salary FROM emp ORDER BY salary DESC)
+WHERE rownum <=5;
+
+or
+
+select level,max(sal) from emp where level=&n connect by prior sal > sal group by level.
+
+
+Removing Duplicates:
+
+delete from emp where rowid not in(select min(rowid) from emp group by empno)
+
+Datastage:
+==========
+Preserve partitioning flag has 3 possible settings
+
+Set : downstream stages are to attempt to retain partitioning and sort order
+Clear : downstream stages need not retain partitioning and sort order
+Propagate : tries to pass the flag setting from input to output links
+
+Conformed Dimension?
+Junk Dimension?
+Ans:A junk dimension is grouping of low cardinality flags and indicators. This junk dimension helps in avoiding cluttered design of data warehouse. 
+Provides an easy way to access the dimensions from a single point of entry and improves the performance of sql queries
+Ex: Table: Gender
+Id Gender_status
+----------------
+1  Male
+2  Female
+
+Table: Marital Status
+Id Marital_Status
+----------------
+1  Single
+2  Married
+
+Here both the dimensions have low cardinality flags. 
+This will cause maintenance of two tables and decrease performance of sql queries.
+
+We can combine these two dimensions into a single table by cross joining and can maintain a single dimension table.
+The result of cross join is shown below:
+id gender mrg_status
+--------------------
+1  Male      Single
+2  Male      Married
+3  Female   Single
+4  Female   Married
+Diff B/w Star& Snowflake?
+What is SCD?
+Diff.ways to import metadata?
+Find no of rows in seq.file?
+diff b/w lookup,Join,Merge?
+Partition techniques?
+what are the operators for seq.file?
+APT config file?
+How to merge multiple files with out using funnel?
+What is Granualarity?
+What is the use of node?
+Change capture stage?
+Design a job uniq & duplicate records?
+Version Control in datastage?
+Performence Tunning
+JCL in  Datastage?
+Ans:JCL defines Job Control Language it is ued to run more number of jobs at a time with or without using loops. 
+steps:click on edit in the menu bar and select 'job properties' and enter the parameters asparamete prompt
+typeSTEP_ID STEP_ID stringSource SRC stringDSN DSN stringUsername unm stringPassword pwd stringafter editing the above steps then
+set JCL button and select the jobs from the listbox and run the job.
+How a server job can be converted to parallel Job?
+Ans : IPC stage and Link COllector
+Diff b/w Hash File & Seq FIle?
+Diff. b/w Primary key & Surrogate Key?
+Fact less fact table?
+OLTP vs OLAP?
+What is OSH Code?
+Diff b/w 8.7 & 8.5?
+Perfomence
+8.5 :No toggle break point
+8.7: Yes,The running job can be continued or aborted by using multiple breakpoints with 
+conditional logic per link and node. (row data or job parameter values can be examined by breakpoint conditional logic)
+
+What is Hash file?
+Ans:Hash file stores the data based on hash algorithm and on a key value. 
+A sequential file is just a file with no key column. Hash file used as a reference for look up. Sequential file cannot 
+
+Lookup Performance issue reason?
+lkp has it own cache memory. so it will fetch all dat and store it in a cache memory and performs join.
+but when the data is high,the cache memory overflows so in order to accommodate all the data it will create additional disk files. 
+so while doing lkp it has to open each and every additional disk files created for evry i/p record.so perfomance degrades
+What is fork join?
+what is conductor?
+what is section readers?
+Replace Null characters in unix?
+Ans:
+tr -d "\000" < input.txt > output.txt 
+tr "\000" "X" < input.txt > output.txt
+
+
+
+
+
+what is type2?
+job design of type2?
+partition techniques?
+configuration file?
+stage variable ?
+how to remove duplicates without using rd stage?
+why join is required pre sorted data?
+what is d/w dataset and seq file?
+performance tunig in your project?
+functions in transformer stage?
+what is difere/betwn join and lookup and merge?
+how to handle nulls in your current project?
+what is datamart?
+dimensions and fact types?
+sequence jobs trigger conditions?
+start loop and end loop activities?
+what is your database?
+what is differnce between oracle and teradata?
+how to display duplicates?
+what is matarilized view?
+what is correlated sub querry?
+what are the indexes used in your project?
+how to delete duplicate rows?
+how to get nth max salary?
+what is difrence b/w rank and dense rank?
+what is diff b/w union and union all?
+unix commands grep and sed and awk? 

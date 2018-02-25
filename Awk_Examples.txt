@@ -1,0 +1,71 @@
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk 'NR!=1{print $1}' test1.txt
+AS:12000
+AF:9800
+AS:12300
+NA:3400
+OC:12000
+AF:500
+AS:1000
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" 'NR!=1{print $2}' test1.txt
+12000
+9800
+12300
+3400
+12000
+500
+1000
+
+
+
+awk 'BEGIN{FS=":"; OFS="|"; print "Con|SomeVal"} NR!=1 {print $1,$2}' test1.txt
+awk 'BEGIN{FS=":"; OFS="|"; print "Murali|Bhrath"} NR!=1 print{$1,$2}' test1.txt
+
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /^AS/ test1.txt
+AS:12000
+AS:12300
+AS:1000
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /^A/ test1.txt
+AS:12000
+AF:9800
+AS:12300
+AF:500
+AS:1000
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /^
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /^C/ test1.txt
+Continent:Val
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /$R/ test1.txt
+Continent:Val
+AS:12000
+AF:9800
+AS:12300
+NA:3400
+OC:12000
+AF:500
+AS:1000
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /l^/ test1.txt
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /$l/ test1.txt
+Continent:Val
+AS:12000
+AF:9800
+AS:12300
+NA:3400
+OC:12000
+AF:500
+AS:1000
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ test1.txt
+ksh: test1.txt: 0403-006 Execute permission denied.
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$  awk -F":" /
+ Syntax Error The source line is 1.
+ The error context is
+                 >>> / <<<
+ awk: 0602-500 Quitting The source line is 1.
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$
+[dsadm@3G-ETL:/home/dsadm/srinu/srinu2]$ awk -F":" /l$/ test1.txt
+Continent:Val
